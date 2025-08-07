@@ -1,0 +1,31 @@
+CLASS zcl_fabap_jul2025_exer05_lbs DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES if_amdp_marker_hdb.
+
+    TYPES gty_conn TYPE STANDARD TABLE OF zi_fabap_jul2025_demo01_lbs WITH EMPTY KEY.
+
+    CLASS-METHODS get_data
+        FOR TABLE FUNCTION zi_fabap_jul2025_exer05_lbs.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS ZCL_FABAP_JUL2025_EXER05_LBS IMPLEMENTATION.
+
+
+  METHOD get_data BY DATABASE FUNCTION
+   FOR HDB LANGUAGE SQLSCRIPT
+   USING /dmo/booking.
+
+    RETURN select * from "/DMO/BOOKING"
+    WHERE client = session_context('CLIENT');
+
+  ENDMETHOD.
+ENDCLASS.
